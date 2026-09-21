@@ -360,7 +360,6 @@
     const duration = activity.platform === "YouTube" ? "6:12" : activity.platform === "TikTok" ? "0:58" : "Post";
     const preview = hasMedia ? `<div class="activity-cover ${activity.cover}" role="img" aria-label="Cover artwork for ${activity.title}">
         <span class="activity-platform-badge" aria-label="${activity.platform}">${socialIcon(activity.platform)}</span>
-        <span class="activity-example-badge">Example</span>
         <span class="cover-orbit orbit-a"></span><span class="cover-orbit orbit-b"></span>
         <span class="cover-symbol">${icon(activity.cover === "voyage" ? "play" : activity.cover === "bridge" ? "bridge" : "orbit")}</span>
         <span class="cover-caption"><small>${activity.sector}</small>Explore the story</span>
@@ -369,7 +368,7 @@
     return `<article class="panel activity-card ${activity.cover ? "with-media" : "no-media"}">
       ${preview}
       <div class="activity-card-body">
-        ${hasMedia ? "" : `<div class="activity-text-label"><span>${socialIcon(activity.platform)} ${activity.platform}</span><span>${activity.sector}</span><span>Example</span></div>`}
+        ${hasMedia ? "" : `<div class="activity-text-label"><span>${socialIcon(activity.platform)} ${activity.platform}</span></div>`}
         <div class="activity-story"><span class="avatar">${activity.initials}</span><h3>${activity.title}</h3></div>
         ${hasMedia ? "" : `<p class="activity-excerpt">${activity.excerpt}</p>`}
         <strong class="activity-byline">${activity.author}</strong>
