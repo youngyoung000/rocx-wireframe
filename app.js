@@ -579,10 +579,10 @@
       return `<section class="panel locked-state"><span class="auth-icon">${icon("lock")}</span><h2>DeFi ranking is not public on testnet.</h2><p>Onboarding contribution data is preserved for analysis, but user names, addresses, scores, and ranks remain hidden. This board is planned for Mainnet.</p><span class="pill">Available on Mainnet</span></section>`;
     }
     const rows = C.leaderboard[type] || C.leaderboard.overall;
-    const unitLabel = "AE earned";
+    const isPoa = type === "poa";
     const context = type === "poa"
-      ? `<div class="policy-note prominent">${icon("trophy")}<span><strong>14-Day PoA AE Ranking.</strong> Rank is based on valid AE earned through PoA during the current round. Top-100 settlement eligibility may be shown, but the payout budget, funding source, and cutoff are still pending approval.</span></div>`
-      : `<div class="policy-note prominent">${icon("chart")}<span><strong>Campaign Contribution Ranking.</strong> This board compares valid AE earned during the campaign. Current AE balance is separate and may be lower after normal game spending.</span></div>`;
+      ? `<div class="policy-note prominent">${icon("trophy")}<span><strong>PoA Contributor Ranking.</strong> Contributors are ranked by the Net Score of all valid activities in this round: Helpful − Not Helpful. Eligible contributors receive AE after the round closes and settlement is approved.</span></div>`
+      : `<div class="policy-note prominent">${icon("chart")}<span><strong>Overall AE Ranking.</strong> This board ranks users by their total AE for the selected season.</span></div>`;
     const periodFilters = type === "poa"
       ? `<span class="pill mint">14-day round · Live</span><span class="filter-spacer"></span><select class="select-control"><option>Current round</option><option>Previous round</option></select>`
       : `<span class="pill mint">Season 03 · Live</span><span class="filter-spacer"></span><select class="select-control"><option>Season 03</option><option>Season 02</option></select>`;
@@ -590,11 +590,15 @@
       ${context}
       <div class="filter-row">${periodFilters}</div>
       <div class="leader-podium">
-        ${rows.slice(0,3).map((row, index) => `<article class="panel podium-card ${index === 0 ? "first" : index === 1 ? "second" : "third"}"><span class="rank-medal">${row.rank}</span><h3>${row.label}</h3><p>${row.user}</p><strong>${row.value}</strong></article>`).join("")}
+        ${rows.slice(0,3).map((row, index) => `<article class="panel podium-card ${index === 0 ? "first" : index === 1 ? "second" : "third"}"><span class="rank-medal">${row.rank}</span><h3>${row.label}</h3><p>${row.user}</p><strong>${isPoa ? `Net Score ${row.netScore}` : row.value}</strong>${isPoa ? `<span class="podium-reward">AE reward after settlement</span>` : ""}</article>`).join("")}
       </div>
       <div class="leader-layout">
-        <section class="panel table-wrap"><table class="data-table"><thead><tr><th>Rank</th><th>User</th><th>Change</th><th style="text-align:right">${unitLabel}</th></tr></thead><tbody>${rows.map(row => `<tr><td class="rank">#${row.rank}</td><td><div class="user-cell"><span class="avatar">${row.label.slice(0,2).toUpperCase()}</span><div><strong>${row.label}</strong><small>${row.user}</small></div></div></td><td class="delta">${row.delta}</td><td class="value-cell">${row.value}</td></tr>`).join("")}</tbody></table></section>
-        <aside class="panel my-rank-card"><span class="icon-box purple">${icon("trophy")}</span><h2>My rank</h2><div class="my-rank-number">#27</div><p>Top 18% of active users ${type === "poa" ? "this round" : "this campaign"}.</p><div class="rank-stat"><span>AE earned</span><strong>${type === "poa" ? "128 AE" : "4,820 AE"}</strong></div><div class="rank-stat"><span>Next rank</span><strong>+240 AE</strong></div><a class="button soft full" href="${href("/app/explore/missions")}">Find ways to contribute</a></aside>
+        <section class="panel table-wrap"><table class="data-table"><thead>${isPoa ? `<tr><th>Rank</th><th>Contributor</th><th>Helpful</th><th>Not Helpful</th><th>Net Score</th><th style="text-align:right">AE reward</th></tr>` : `<tr><th>Rank</th><th>User</th><th>Change</th><th style="text-align:right">Total AE</th></tr>`}</thead><tbody>${rows.map(row => isPoa
+          ? `<tr><td class="rank">#${row.rank}</td><td><div class="user-cell"><span class="avatar">${row.label.slice(0,2).toUpperCase()}</span><div><strong>${row.label}</strong><small>${row.user}</small></div></div></td><td>${row.helpful}</td><td>${row.notHelpful}</td><td><strong>${row.netScore}</strong></td><td class="value-cell"><span class="pill">${row.reward}</span></td></tr>`
+          : `<tr><td class="rank">#${row.rank}</td><td><div class="user-cell"><span class="avatar">${row.label.slice(0,2).toUpperCase()}</span><div><strong>${row.label}</strong><small>${row.user}</small></div></div></td><td class="delta">${row.delta}</td><td class="value-cell">${row.value}</td></tr>`).join("")}</tbody></table></section>
+        ${isPoa
+          ? `<aside class="panel my-rank-card"><span class="icon-box purple">${icon("trophy")}</span><h2>My contributor rank</h2><div class="my-rank-number">#27</div><p>Live ranking for the current round. Final rank may change after eligibility and activity validation.</p><div class="rank-stat"><span>Contributor Net Score</span><strong>19</strong></div><div class="rank-stat"><span>Next rank</span><strong>+3 score</strong></div><div class="rank-stat"><span>AE reward</span><strong>Pending settlement</strong></div><a class="button soft full" href="${href("/app/poa/my-activity")}">View my activities</a></aside>`
+          : `<aside class="panel my-rank-card"><span class="icon-box purple">${icon("trophy")}</span><h2>My rank</h2><div class="my-rank-number">#27</div><p>Top 18% of active users this season.</p><div class="rank-stat"><span>Total AE</span><strong>4,820 AE</strong></div><div class="rank-stat"><span>Next rank</span><strong>+240 AE</strong></div><a class="button soft full" href="${href("/app/explore/missions")}">Earn more AE</a></aside>`}
       </div>`;
   }
 

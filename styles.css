@@ -704,6 +704,7 @@ h1, h2, h3 { letter-spacing: -.035em; }
 .podium-card h3 { font-size: 15px; margin: 0 0 4px; }
 .podium-card p { color: var(--muted); font-size: 11px; margin-bottom: 14px; }
 .podium-card strong { color: #405776; font-size: 18px; font-weight: 500; }
+.podium-reward { display: block; margin-top: 7px; color: var(--muted); font-size: 11px; }
 .leader-layout { display: grid; grid-template-columns: minmax(0,1fr) 285px; gap: 20px; }
 .table-wrap { overflow-x: auto; }
 .data-table { width: 100%; border-collapse: collapse; min-width: 640px; }
