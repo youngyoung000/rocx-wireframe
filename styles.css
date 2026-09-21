@@ -335,9 +335,11 @@ h1, h2, h3 { letter-spacing: -.035em; }
 .activity-actions button { border: 0; background: transparent; color: inherit; padding: 0; display: inline-flex; align-items: center; gap: 5px; }
 .activity-actions .activity-vote { min-width: 44px; height: 30px; justify-content: center; border-radius: 8px; background: #f5f7fb; }
 .activity-actions .activity-vote:hover { color: #536dc0; background: #f4f6fd; }
+.activity-actions .activity-vote.active { color: #566dc0; background: #e8edff; box-shadow: inset 0 0 0 1px #cdd7fb; }
 .activity-actions .activity-vote .icon { width: 14px; height: 14px; }
 .activity-actions .activity-bookmark { margin-left: auto; }
-.activity-actions .activity-bookmark,.activity-actions .activity-open { width: 28px; height: 28px; justify-content: center; }
+.activity-actions .activity-bookmark,.activity-actions .activity-open { width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 7px; }
+.activity-actions .activity-bookmark.active { color: #566dc0; background: #e8edff; }
 .activity-actions .activity-bookmark .icon,.activity-actions .activity-open .icon { width: 14px; height: 14px; }
 .poa-register-landing .panel-body > p { max-width: 520px; margin: 0 0 22px; color: #6d7b94; font-size: 14px; line-height: 1.55; }
 

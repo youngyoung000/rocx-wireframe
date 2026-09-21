@@ -42,6 +42,7 @@
   let poaRegisterOpen = ["form", "complete"].includes(initialPoaRegisterStep);
   let poaRegisterStep = poaRegisterOpen ? initialPoaRegisterStep : "form";
   let poaRegisterDraft = { platform: "X", url: poaRegisterStep === "form" ? "" : "https://x.com/you/status/123456789", sector: "DeFi" };
+  const poaActivityActions = {};
   let checkedIn = false;
   const lendingModes = { deposit: "Deposit", borrow: "Borrow" };
   const selectedAssets = { deposit: "ETH", borrow: "USDC", "swap-from": "ETH", "swap-to": "USDC", "bridge-source": NETWORKS.find(network => network.id === selectedNetwork).name, "bridge-destination": "Arbitrum Sepolia" };
@@ -358,6 +359,11 @@
   function activityCard(activity) {
     const hasMedia = Boolean(activity.cover);
     const duration = activity.platform === "YouTube" ? "6:12" : activity.platform === "TikTok" ? "0:58" : "Post";
+    const activityId = encodeURIComponent(activity.title);
+    const actionState = poaActivityActions[activityId] || { vote: null, saved: activity.saved };
+    const helpful = activity.helpful + (actionState.vote === "helpful" ? 1 : 0);
+    const notHelpful = activity.notHelpful + (actionState.vote === "not-helpful" ? 1 : 0);
+    const sourceUrl = activity.platform === "YouTube" ? "https://www.youtube.com/results?search_query=RocX" : activity.platform === "TikTok" ? "https://www.tiktok.com/search?q=RocX" : activity.platform === "Threads" ? "https://www.threads.net/search?q=RocX" : "https://x.com/RocX_official";
     const preview = hasMedia ? `<div class="activity-cover ${activity.cover}" role="img" aria-label="Cover artwork for ${activity.title}">
         <span class="activity-platform-badge" aria-label="${activity.platform}">${socialIcon(activity.platform)}</span>
         <span class="cover-orbit orbit-a"></span><span class="cover-orbit orbit-b"></span>
@@ -373,7 +379,7 @@
         ${hasMedia ? "" : `<p class="activity-excerpt">${activity.excerpt}</p>`}
         <strong class="activity-byline">${activity.author}</strong>
         <span class="activity-meta">${activity.platform} · ${activity.sector} · ${activity.time}</span>
-        <div class="activity-actions"><button class="activity-vote" aria-label="Helpful, ${activity.helpful} evaluations" title="Helpful · ${activity.helpful}" data-demo="Helpful evaluation requires a wallet signature.">${icon("vote")}<span>${activity.helpful}</span></button><button class="activity-vote" aria-label="Not Helpful, ${activity.notHelpful} evaluations" title="Not Helpful · ${activity.notHelpful}" data-demo="Not Helpful evaluation requires a wallet signature.">${icon("voteDown")}<span>${activity.notHelpful}</span></button><button class="activity-bookmark" data-demo="Bookmark updated." aria-label="${activity.saved ? "Remove bookmark" : "Bookmark activity"}">${icon("bookmark")}</button><button class="activity-open" data-demo="Activity source opened." aria-label="Open activity source">${icon("external")}</button></div>
+        <div class="activity-actions"><button class="activity-vote ${actionState.vote === "helpful" ? "active" : ""}" aria-label="Helpful, ${helpful} evaluations" aria-pressed="${actionState.vote === "helpful"}" title="Helpful · ${helpful}" data-activity-vote="${activityId}" data-vote-kind="helpful">${icon("vote")}<span>${helpful}</span></button><button class="activity-vote ${actionState.vote === "not-helpful" ? "active" : ""}" aria-label="Not Helpful, ${notHelpful} evaluations" aria-pressed="${actionState.vote === "not-helpful"}" title="Not Helpful · ${notHelpful}" data-activity-vote="${activityId}" data-vote-kind="not-helpful">${icon("voteDown")}<span>${notHelpful}</span></button><button class="activity-bookmark ${actionState.saved ? "active" : ""}" data-activity-bookmark="${activityId}" aria-label="${actionState.saved ? "Remove bookmark" : "Bookmark activity"}" aria-pressed="${actionState.saved}">${icon("bookmark")}</button><a class="activity-open" href="${sourceUrl}" target="_blank" rel="noreferrer" aria-label="Open activity source">${icon("external")}</a></div>
       </div>
     </article>`;
   }
@@ -1082,6 +1088,29 @@
       poaPlatform = "All platforms";
       render();
     });
+    document.querySelectorAll("[data-activity-vote]").forEach(button => button.addEventListener("click", () => {
+      const scrollY = window.scrollY;
+      const activityId = button.dataset.activityVote;
+      const activity = C.activities.find(item => encodeURIComponent(item.title) === activityId);
+      if (!activity) return;
+      const current = poaActivityActions[activityId] || { vote: null, saved: activity.saved };
+      const vote = current.vote === button.dataset.voteKind ? null : button.dataset.voteKind;
+      poaActivityActions[activityId] = { ...current, vote };
+      render();
+      window.scrollTo(0, scrollY);
+      showToast(vote ? (vote === "helpful" ? "Marked Helpful." : "Marked Not Helpful.") : "Evaluation removed.");
+    }));
+    document.querySelectorAll("[data-activity-bookmark]").forEach(button => button.addEventListener("click", () => {
+      const scrollY = window.scrollY;
+      const activityId = button.dataset.activityBookmark;
+      const activity = C.activities.find(item => encodeURIComponent(item.title) === activityId);
+      if (!activity) return;
+      const current = poaActivityActions[activityId] || { vote: null, saved: activity.saved };
+      poaActivityActions[activityId] = { ...current, saved: !current.saved };
+      render();
+      window.scrollTo(0, scrollY);
+      showToast(current.saved ? "Bookmark removed." : "Activity saved.");
+    }));
     document.querySelectorAll("[data-poa-register-open]").forEach(button => button.addEventListener("click", () => {
       if (previewState !== "active") {
         openActionPreview(previewState === "logged-out" ? "Connect to register" : "Complete onboarding first", previewState === "logged-out" ? "Connect your wallet and social account before registering an activity." : "Complete the account setup to unlock activity registration.", "unavailable");
@@ -1204,7 +1233,7 @@
       button.addEventListener("click", () => openActionPreview(button.textContent.trim(), "This feature is not available in the current testnet release. The next screen will explain eligibility and timing when the feature launches.", "unavailable"));
     });
 
-    const handledButtons = "[data-profile-toggle],[data-network-toggle],[data-disconnect],[data-my-photo-remove],[data-my-social-edit],[data-my-social-unlink],[data-my-dialog-close],[data-my-social-remove],[data-my-portfolio-network],[data-flow-close],[data-flow-confirm],[data-flow-option],[data-preview-state],[data-mission-toggle],[data-connect],[data-connect-game],[data-network-select],[data-lending-mode],[data-lending-open],[data-poa-platform],[data-poa-clear-filters],[data-poa-register-open],[data-poa-register-close],[data-bet-action],[data-game-selection],[data-roulette-seat],[data-game-play],[data-prediction-bet],[data-game-close],[data-complete-onboarding],[data-locked],[data-demo],[data-checkin],[data-copy],[aria-disabled=true],.mobile-menu,.toggle,.segmented button,[type=submit]";
+    const handledButtons = "[data-profile-toggle],[data-network-toggle],[data-disconnect],[data-my-photo-remove],[data-my-social-edit],[data-my-social-unlink],[data-my-dialog-close],[data-my-social-remove],[data-my-portfolio-network],[data-flow-close],[data-flow-confirm],[data-flow-option],[data-preview-state],[data-mission-toggle],[data-connect],[data-connect-game],[data-network-select],[data-lending-mode],[data-lending-open],[data-poa-platform],[data-poa-clear-filters],[data-poa-register-open],[data-poa-register-close],[data-activity-vote],[data-activity-bookmark],[data-bet-action],[data-game-selection],[data-roulette-seat],[data-game-play],[data-prediction-bet],[data-game-close],[data-complete-onboarding],[data-locked],[data-demo],[data-checkin],[data-copy],[aria-disabled=true],.mobile-menu,.toggle,.segmented button,[type=submit]";
     document.querySelectorAll(`button:not(:disabled):not(${handledButtons})`).forEach(button => button.addEventListener("click", () => {
       const label = button.textContent.trim().replace(/\s+/g, " ") || button.getAttribute("aria-label") || "Selection";
       const isAsset = button.classList.contains("asset-select");
