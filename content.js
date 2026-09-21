@@ -112,12 +112,12 @@ window.ROCX_CONTENT = {
 
   leaderboard: {
     overall: [
-      { rank: 1, user: "0xaeb5...f0b6", label: "Astra", value: "18,225 AE", delta: "+2" },
-      { rank: 2, user: "0x8f9e...09f3", label: "Orbit", value: "16,390 AE", delta: "−1" },
-      { rank: 3, user: "0x00f8...abb1", label: "Nova", value: "15,073 AE", delta: "+1" },
-      { rank: 4, user: "0xf5ce...2d7d", label: "Blue", value: "12,386 AE", delta: "—" },
-      { rank: 5, user: "0x0f0e...a243", label: "Echo", value: "10,300 AE", delta: "+3" },
-      { rank: 6, user: "0x1b9b...1941", label: "Atlas", value: "9,880 AE", delta: "−2" }
+      { rank: 1, user: "0xaeb5...f0b6", label: "Astra", value: "18,225 AE" },
+      { rank: 2, user: "0x8f9e...09f3", label: "Orbit", value: "16,390 AE" },
+      { rank: 3, user: "0x00f8...abb1", label: "Nova", value: "15,073 AE" },
+      { rank: 4, user: "0xf5ce...2d7d", label: "Blue", value: "12,386 AE" },
+      { rank: 5, user: "0x0f0e...a243", label: "Echo", value: "10,300 AE" },
+      { rank: 6, user: "0x1b9b...1941", label: "Atlas", value: "9,880 AE" }
     ],
     defi: [
       { rank: 1, user: "0xf5ce...2d7d", label: "Blue", value: "$28,420", delta: "+1" },
@@ -127,11 +127,11 @@ window.ROCX_CONTENT = {
       { rank: 5, user: "0x1b9b...1941", label: "Atlas", value: "$12,400", delta: "−1" }
     ],
     poa: [
-      { rank: 1, user: "0x8f9e...09f3", label: "Orbit", helpful: 68, notHelpful: 4, netScore: 64, reward: "Pending" },
-      { rank: 2, user: "0x00f8...abb1", label: "Nova", helpful: 61, notHelpful: 3, netScore: 58, reward: "Pending" },
-      { rank: 3, user: "0xaeb5...f0b6", label: "Astra", helpful: 55, notHelpful: 5, netScore: 50, reward: "Pending" },
-      { rank: 4, user: "0x0f0e...a243", label: "Echo", helpful: 46, notHelpful: 2, netScore: 44, reward: "Pending" },
-      { rank: 5, user: "0xf5ce...2d7d", label: "Blue", helpful: 41, notHelpful: 3, netScore: 38, reward: "Pending" }
+      { rank: 1, user: "0x8f9e...09f3", label: "Orbit", helpful: 68, notHelpful: 4, netScore: 64, reward: "312 AE" },
+      { rank: 2, user: "0x00f8...abb1", label: "Nova", helpful: 61, notHelpful: 3, netScore: 58, reward: "286 AE" },
+      { rank: 3, user: "0xaeb5...f0b6", label: "Astra", helpful: 55, notHelpful: 5, netScore: 50, reward: "244 AE" },
+      { rank: 4, user: "0x0f0e...a243", label: "Echo", helpful: 46, notHelpful: 2, netScore: 44, reward: "198 AE" },
+      { rank: 5, user: "0xf5ce...2d7d", label: "Blue", helpful: 41, notHelpful: 3, netScore: 38, reward: "175 AE" }
     ]
   }
 };
