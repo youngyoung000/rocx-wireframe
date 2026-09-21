@@ -69,7 +69,7 @@ window.ROCX_CONTENT = {
     },
     leaderboard: {
       title: "Community rankings.",
-      description: "Overall ranks by AE. PoA ranks contributors and rewards them after each round."
+      description: "Overall ranks by cumulative AE. PoA ranks contributors and rewards them after each round."
     },
     "my-page": {
       title: "My corner of the universe.",

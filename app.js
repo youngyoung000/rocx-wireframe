@@ -582,10 +582,10 @@
     const isPoa = type === "poa";
     const context = type === "poa"
       ? `<div class="policy-note prominent">${icon("trophy")}<span><strong>PoA Contributor Ranking.</strong> Contributors are ranked by the Net Score of all valid activities in this round: Helpful − Not Helpful. Estimated AE rewards may change after eligibility review, final ranking, and settlement approval.</span></div>`
-      : `<div class="policy-note prominent">${icon("chart")}<span><strong>Overall AE Ranking.</strong> This board ranks users by their total AE for the selected season.</span></div>`;
+      : `<div class="policy-note prominent">${icon("chart")}<span><strong>Overall AE Ranking.</strong> This all-time board ranks users by cumulative Total AE. It does not reset by season.</span></div>`;
     const periodFilters = type === "poa"
       ? `<span class="pill mint">14-day round · Live</span><span class="filter-spacer"></span><select class="select-control"><option>Current round</option><option>Previous round</option></select>`
-      : `<span class="pill mint">Season 03 · Live</span><span class="filter-spacer"></span><select class="select-control"><option>Season 03</option><option>Season 02</option></select>`;
+      : `<span class="pill mint">All-time</span>`;
     return `
       ${context}
       <div class="filter-row">${periodFilters}</div>
@@ -598,7 +598,7 @@
           : `<tr><td class="rank">#${row.rank}</td><td><div class="user-cell"><span class="avatar">${row.label.slice(0,2).toUpperCase()}</span><div><strong>${row.label}</strong><small>${row.user}</small></div></div></td><td class="value-cell">${row.value}</td></tr>`).join("")}</tbody></table></section>
         ${isPoa
           ? `<aside class="panel my-rank-card"><span class="icon-box purple">${icon("trophy")}</span><h2>My contributor rank</h2><div class="my-rank-number">#27</div><p>Live ranking for the current round. Final rank and reward may change after validation.</p><div class="rank-stat"><span>Contributor Net Score</span><strong>19</strong></div><div class="rank-stat"><span>Next rank</span><strong>+3 score</strong></div><div class="rank-stat"><span>Est. AE Reward</span><strong>128 AE</strong></div><a class="button soft full" href="${href("/app/poa/my-activity")}">View my activities</a></aside>`
-          : `<aside class="panel my-rank-card"><span class="icon-box purple">${icon("trophy")}</span><h2>My rank</h2><div class="my-rank-number">#27</div><p>Top 18% of active users this season.</p><div class="rank-stat"><span>Total AE</span><strong>4,820 AE</strong></div><div class="rank-stat"><span>Next rank</span><strong>+240 AE</strong></div><a class="button soft full" href="${href("/app/explore/missions")}">Earn more AE</a></aside>`}
+          : `<aside class="panel my-rank-card"><span class="icon-box purple">${icon("trophy")}</span><h2>My rank</h2><div class="my-rank-number">#27</div><p>Top 18% of all ranked users.</p><div class="rank-stat"><span>Cumulative Total AE</span><strong>4,820 AE</strong></div><div class="rank-stat"><span>Next rank</span><strong>+240 AE</strong></div><a class="button soft full" href="${href("/app/explore/missions")}">Earn more AE</a></aside>`}
       </div>`;
   }
 
