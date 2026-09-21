@@ -47,10 +47,10 @@ window.ROCX_CONTENT = {
     ],
     "my-page": [
       { label: "My Profile", route: "/app/my-page/profile" },
-      { label: "SBT", route: "/app/my-page/sbt", badge: "Coming soon" },
       { label: "Social Profiles", route: "/app/my-page/social" },
       { label: "Portfolio", route: "/app/my-page/portfolio" },
-      { label: "My AE", route: "/app/my-page/ae" }
+      { label: "My AE", route: "/app/my-page/ae" },
+      { label: "SBT", route: "/app/my-page/sbt", badge: "Coming soon" }
     ]
   },
 
@@ -79,15 +79,15 @@ window.ROCX_CONTENT = {
 
   onboardingMissions: [
     { id: "connect", category: "Account", icon: "wallet", title: "Connect wallet and social", detail: "Connect a wallet and at least one social account.", reward: "Required", action: "Connect", status: "progress", progress: 1, target: 2 },
-    { id: "first-deposit", category: "DeFi", icon: "orbit", title: "Deposit $50+ once", detail: "Use Base, Ethereum, or Arbitrum Sepolia. Faucet use is optional.", reward: "+100 AE", action: "Deposit", route: "/app/defi/deposit", secondaryAction: "Get test ETH", secondaryExternal: "https://www.alchemy.com/faucets/base-sepolia", status: "ready", progress: 0, target: 1 },
-    { id: "follow-rocx", category: "Social", icon: "users", social: "X", title: "Follow @RocX_official", detail: "Use your connected X account.", reward: "Required", action: "Open X", external: "https://x.com/RocX_official", status: "ready", progress: 0, target: 1 }
+    { id: "follow-rocx", category: "Social", icon: "users", social: "X", title: "Follow @RocX_official", detail: "Use your connected X account.", reward: "Required", action: "Open X", external: "https://x.com/RocX_official", status: "ready", progress: 0, target: 1 },
+    { id: "first-deposit", category: "DeFi", icon: "orbit", title: "Deposit $50+ once", detail: "Use Base, Ethereum, or Arbitrum Sepolia. Faucet use is optional.", reward: "+100 AE", action: "Deposit", route: "/app/defi/deposit", secondaryAction: "Get test ETH", secondaryExternal: "https://www.alchemy.com/faucets/base-sepolia", status: "ready", progress: 0, target: 1 }
   ],
 
   dailyMissions: [
     { id: "check-in", category: "Attendance", icon: "calendar", title: "Check in today", detail: "Sign once. Resets at 00:00 UTC.", reward: "+100 AE", action: "Check in", status: "ready", featured: true, progress: 0, target: 1 },
-    { id: "play-game", category: "Explore", icon: "cards", title: "Play a bonus game", detail: "Your settled result determines AE.", reward: "Result based", action: "View games", status: "ready", progress: 0, target: 1 },
     { id: "register-link", category: "PoA", icon: "message", title: "Register a PoA link", detail: "One original public link per UTC day.", reward: "Ranking", action: "Register", status: "ready", progress: 0, target: 1 },
-    { id: "helpful-vote", category: "PoA", icon: "vote", title: "Mark one activity Helpful", detail: "Review the source, then sign.", reward: "PoA signal", action: "Open feed", status: "ready", progress: 0, target: 1 }
+    { id: "helpful-vote", category: "PoA", icon: "vote", title: "Mark one activity Helpful", detail: "Review the source, then sign.", reward: "PoA signal", action: "Open feed", status: "ready", progress: 0, target: 1 },
+    { id: "play-game", category: "Explore", icon: "cards", title: "Play a bonus game", detail: "Your settled result determines AE.", reward: "Result based", action: "View games", status: "ready", progress: 0, target: 1 }
   ],
 
   weeklyMissions: [

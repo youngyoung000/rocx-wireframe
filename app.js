@@ -41,7 +41,7 @@
   let poaSort = "Latest";
   let poaRegisterOpen = ["form", "complete"].includes(initialPoaRegisterStep);
   let poaRegisterStep = poaRegisterOpen ? initialPoaRegisterStep : "form";
-  let poaRegisterDraft = { platform: "X", url: poaRegisterStep === "form" ? "" : "https://x.com/you/status/123456789" };
+  let poaRegisterDraft = { platform: "X", url: poaRegisterStep === "form" ? "" : "https://x.com/you/status/123456789", sector: "DeFi" };
   let checkedIn = false;
   const lendingModes = { deposit: "Deposit", borrow: "Borrow" };
   const selectedAssets = { deposit: "ETH", borrow: "USDC", "swap-from": "ETH", "swap-to": "USDC", "bridge-source": NETWORKS.find(network => network.id === selectedNetwork).name, "bridge-destination": "Arbitrum Sepolia" };
@@ -356,12 +356,23 @@
   }
 
   function activityCard(activity) {
+    const hasMedia = Boolean(activity.cover);
+    const duration = activity.platform === "YouTube" ? "6:12" : activity.platform === "TikTok" ? "0:58" : "Post";
     return `<article class="panel activity-card ${activity.cover ? "with-media" : "no-media"}">
-      <div class="activity-author"><span class="avatar">${activity.initials}</span><div><strong>${activity.author}</strong><small>${socialIcon(activity.platform)} ${activity.platform} · ${activity.time}</small></div><span class="pill">${activity.sector}</span></div>
-      ${activity.cover ? `<div class="activity-cover ${activity.cover}" role="img" aria-label="Cover artwork for ${activity.title}"><span class="cover-orbit orbit-a"></span><span class="cover-orbit orbit-b"></span><span class="cover-symbol">${icon(activity.cover === "voyage" ? "play" : activity.cover === "bridge" ? "bridge" : "orbit")}</span><span class="cover-caption">${activity.sector}</span></div>` : ""}
-      <div class="activity-story"><h3>${activity.title}</h3></div>
-      <p>${activity.excerpt}</p>
-      <div class="activity-actions"><button class="activity-vote" aria-label="Helpful, ${activity.helpful} evaluations" title="Helpful · ${activity.helpful}" data-demo="Helpful evaluation requires a wallet signature.">${icon("vote")}</button><button class="activity-vote" aria-label="Not Helpful, ${activity.notHelpful} evaluations" title="Not Helpful · ${activity.notHelpful}" data-demo="Not Helpful evaluation requires a wallet signature.">${icon("voteDown")}</button><button data-demo="Bookmark updated.">${icon("bookmark")} ${activity.saved ? "Saved" : "Save"}</button></div>
+      <div class="activity-cover ${activity.cover || "textual"}" role="img" aria-label="${hasMedia ? `Cover artwork for ${activity.title}` : `Text activity preview for ${activity.title}`}">
+        <span class="activity-platform-badge" aria-label="${activity.platform}">${socialIcon(activity.platform)}</span>
+        <span class="activity-example-badge">Example</span>
+        <span class="cover-orbit orbit-a"></span><span class="cover-orbit orbit-b"></span>
+        <span class="cover-symbol">${icon(activity.cover === "voyage" ? "play" : activity.cover === "bridge" ? "bridge" : activity.cover ? "orbit" : "message")}</span>
+        <span class="cover-caption"><small>${activity.sector}</small>${hasMedia ? "Explore the story" : activity.title}</span>
+        <span class="activity-duration">${duration}</span>
+      </div>
+      <div class="activity-card-body">
+        <div class="activity-story"><span class="avatar">${activity.initials}</span><h3>${activity.title}</h3></div>
+        <strong class="activity-byline">${activity.author}</strong>
+        <span class="activity-meta">${activity.platform} · ${activity.sector} · ${activity.time}</span>
+        <div class="activity-actions"><button class="activity-vote" aria-label="Helpful, ${activity.helpful} evaluations" title="Helpful · ${activity.helpful}" data-demo="Helpful evaluation requires a wallet signature.">${icon("vote")}<span>${activity.helpful}</span></button><button class="activity-vote" aria-label="Not Helpful, ${activity.notHelpful} evaluations" title="Not Helpful · ${activity.notHelpful}" data-demo="Not Helpful evaluation requires a wallet signature.">${icon("voteDown")}<span>${activity.notHelpful}</span></button><button class="activity-bookmark" data-demo="Bookmark updated." aria-label="${activity.saved ? "Remove bookmark" : "Bookmark activity"}">${icon("bookmark")}</button><button class="activity-open" data-demo="Activity source opened." aria-label="Open activity source">${icon("external")}</button></div>
+      </div>
     </article>`;
   }
 
@@ -390,7 +401,8 @@
 
   function renderPoaRegisterModal() {
     if (!poaRegisterOpen) return "";
-    const form = `<p>Share one original public link from a connected account.</p><form data-poa-register-form><div class="field"><label for="poa-modal-platform">Platform</label><select id="poa-modal-platform" name="platform" required><option value="X" ${poaRegisterDraft.platform === "X" ? "selected" : ""}>X</option><option value="YouTube" ${poaRegisterDraft.platform === "YouTube" ? "selected" : ""}>YouTube</option><option value="TikTok" ${poaRegisterDraft.platform === "TikTok" ? "selected" : ""}>TikTok</option><option value="Threads" ${poaRegisterDraft.platform === "Threads" ? "selected" : ""}>Threads</option></select></div><div class="field"><label for="poa-modal-url">Public activity URL</label><input class="input" id="poa-modal-url" name="url" type="url" required placeholder="https://x.com/you/status/..." value="${escapeHtml(poaRegisterDraft.url)}"><div class="field-help">The author must match your connected account.</div></div><div class="poa-register-modal-actions"><button class="button primary large full" type="submit">Sign & submit ${icon("arrow")}</button></div></form>`;
+    const sectors = ["DeFi", "Layer 2", "AI", "Gaming", "NFT", "Education", "RocX"];
+    const form = `<p>Share one original public link from a connected account.</p><form data-poa-register-form><div class="field"><label for="poa-modal-platform">Platform</label><select id="poa-modal-platform" name="platform" required><option value="X" ${poaRegisterDraft.platform === "X" ? "selected" : ""}>X</option><option value="YouTube" ${poaRegisterDraft.platform === "YouTube" ? "selected" : ""}>YouTube</option><option value="TikTok" ${poaRegisterDraft.platform === "TikTok" ? "selected" : ""}>TikTok</option><option value="Threads" ${poaRegisterDraft.platform === "Threads" ? "selected" : ""}>Threads</option></select></div><div class="field"><label for="poa-modal-url">Public activity URL</label><input class="input" id="poa-modal-url" name="url" type="url" required placeholder="https://x.com/you/status/..." value="${escapeHtml(poaRegisterDraft.url)}"><div class="field-help">The author must match your connected account.</div></div><div class="field"><label for="poa-modal-sector">Sector</label><select id="poa-modal-sector" name="sector" required><option value="" disabled>Select a sector</option>${sectors.map(sector => `<option value="${sector}" ${poaRegisterDraft.sector === sector ? "selected" : ""}>${sector}</option>`).join("")}</select><div class="field-help">Choose the topic that best matches this activity.</div></div><div class="poa-register-modal-actions"><button class="button primary large full" type="submit">Sign & submit ${icon("arrow")}</button></div></form>`;
     const complete = `<div class="poa-register-complete"><span class="icon-box mint">${icon("check")}</span><h3>Activity submitted</h3><p>Track eligibility and evaluation status in My Activity.</p><a class="button primary large" href="${href("/app/poa/my-activity")}">View My Activity ${icon("arrow")}</a></div>`;
     return `<div class="flow-overlay poa-register-overlay" data-poa-register-overlay><section class="poa-register-modal" role="dialog" aria-modal="true" aria-labelledby="poa-register-title"><div class="poa-register-modal-head"><div><span class="eyebrow">PROOF OF ACTIVITY</span><h2 id="poa-register-title">${poaRegisterStep === "form" ? "Register activity" : "Registration status"}</h2></div><button type="button" data-poa-register-close aria-label="Close registration">×</button></div>${poaRegisterStep === "form" ? form : complete}</section></div>`;
   }
@@ -1082,7 +1094,7 @@
     document.querySelector("[data-poa-register-form]")?.addEventListener("submit", event => {
       event.preventDefault();
       const form = event.currentTarget;
-      poaRegisterDraft = { platform: form.elements.platform.value, url: form.elements.url.value.trim() };
+      poaRegisterDraft = { platform: form.elements.platform.value, url: form.elements.url.value.trim(), sector: form.elements.sector.value };
       poaRegisterStep = "complete";
       render();
     });
@@ -1218,8 +1230,9 @@
   function render() {
     const route = currentRoute();
     const section = currentSection(route);
+    const poaFeedPage = section === "poa" && route === "/app/poa/feed";
     document.title = `RocX — ${C.primaryNav.find(item => item.section === section)?.label || "Explore"}`;
-    app.innerHTML = `${renderHeader(section)}<main id="main"><div class="main-inner"><div class="page-layout ${section === "explore" ? "explore-layout" : section === "my-page" ? "my-page-layout" : ""}">${renderSideNav(section, route)}<div class="page-column">${renderHero(section, route)}${renderContent(section, route)}</div></div>${renderFooter()}</div></main>${renderMissionWidget()}${renderActionPreview()}${renderPoaRegisterModal()}${renderMyPageDialog()}<div class="toast" role="status" aria-live="polite"></div>`;
+    app.innerHTML = `${renderHeader(section)}<main id="main"><div class="main-inner ${poaFeedPage ? "poa-feed-main" : ""}"><div class="page-layout ${section === "explore" ? "explore-layout" : section === "my-page" ? "my-page-layout" : ""} ${poaFeedPage ? "poa-feed-layout" : ""}">${renderSideNav(section, route)}<div class="page-column">${renderHero(section, route)}${renderContent(section, route)}</div></div>${renderFooter()}</div></main>${renderMissionWidget()}${renderActionPreview()}${renderPoaRegisterModal()}${renderMyPageDialog()}<div class="toast" role="status" aria-live="polite"></div>`;
     applyAssetSelections();
     bindInteractions();
     window.scrollTo(0, 0);
