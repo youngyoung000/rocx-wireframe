@@ -358,17 +358,20 @@
   function activityCard(activity) {
     const hasMedia = Boolean(activity.cover);
     const duration = activity.platform === "YouTube" ? "6:12" : activity.platform === "TikTok" ? "0:58" : "Post";
-    return `<article class="panel activity-card ${activity.cover ? "with-media" : "no-media"}">
-      <div class="activity-cover ${activity.cover || "textual"}" role="img" aria-label="${hasMedia ? `Cover artwork for ${activity.title}` : `Text activity preview for ${activity.title}`}">
+    const preview = hasMedia ? `<div class="activity-cover ${activity.cover}" role="img" aria-label="Cover artwork for ${activity.title}">
         <span class="activity-platform-badge" aria-label="${activity.platform}">${socialIcon(activity.platform)}</span>
         <span class="activity-example-badge">Example</span>
         <span class="cover-orbit orbit-a"></span><span class="cover-orbit orbit-b"></span>
-        <span class="cover-symbol">${icon(activity.cover === "voyage" ? "play" : activity.cover === "bridge" ? "bridge" : activity.cover ? "orbit" : "message")}</span>
-        <span class="cover-caption"><small>${activity.sector}</small>${hasMedia ? "Explore the story" : activity.title}</span>
+        <span class="cover-symbol">${icon(activity.cover === "voyage" ? "play" : activity.cover === "bridge" ? "bridge" : "orbit")}</span>
+        <span class="cover-caption"><small>${activity.sector}</small>Explore the story</span>
         <span class="activity-duration">${duration}</span>
-      </div>
+      </div>` : "";
+    return `<article class="panel activity-card ${activity.cover ? "with-media" : "no-media"}">
+      ${preview}
       <div class="activity-card-body">
+        ${hasMedia ? "" : `<div class="activity-text-label"><span>${socialIcon(activity.platform)} ${activity.platform}</span><span>${activity.sector}</span><span>Example</span></div>`}
         <div class="activity-story"><span class="avatar">${activity.initials}</span><h3>${activity.title}</h3></div>
+        ${hasMedia ? "" : `<p class="activity-excerpt">${activity.excerpt}</p>`}
         <strong class="activity-byline">${activity.author}</strong>
         <span class="activity-meta">${activity.platform} · ${activity.sector} · ${activity.time}</span>
         <div class="activity-actions"><button class="activity-vote" aria-label="Helpful, ${activity.helpful} evaluations" title="Helpful · ${activity.helpful}" data-demo="Helpful evaluation requires a wallet signature.">${icon("vote")}<span>${activity.helpful}</span></button><button class="activity-vote" aria-label="Not Helpful, ${activity.notHelpful} evaluations" title="Not Helpful · ${activity.notHelpful}" data-demo="Not Helpful evaluation requires a wallet signature.">${icon("voteDown")}<span>${activity.notHelpful}</span></button><button class="activity-bookmark" data-demo="Bookmark updated." aria-label="${activity.saved ? "Remove bookmark" : "Bookmark activity"}">${icon("bookmark")}</button><button class="activity-open" data-demo="Activity source opened." aria-label="Open activity source">${icon("external")}</button></div>
