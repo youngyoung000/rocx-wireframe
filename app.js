@@ -1261,7 +1261,7 @@
   function render() {
     const route = currentRoute();
     const section = currentSection(route);
-    const poaFeedPage = section === "poa" && route === "/app/poa/feed";
+    const poaFeedPage = section === "poa" && ["/app/poa/feed", "/app/poa/my-activity", "/app/poa/bookmarks"].includes(route);
     document.title = `RocX — ${C.primaryNav.find(item => item.section === section)?.label || "Explore"}`;
     app.innerHTML = `${renderHeader(section)}<main id="main"><div class="main-inner ${poaFeedPage ? "poa-feed-main" : ""}"><div class="page-layout ${section === "explore" ? "explore-layout" : section === "my-page" ? "my-page-layout" : ""} ${poaFeedPage ? "poa-feed-layout" : ""}">${renderSideNav(section, route)}<div class="page-column">${renderHero(section, route)}${renderContent(section, route)}</div></div>${renderFooter()}</div></main>${renderMissionWidget()}${renderActionPreview()}${renderPoaRegisterModal()}${renderMyPageDialog()}<div class="toast" role="status" aria-live="polite"></div>`;
     applyAssetSelections();
