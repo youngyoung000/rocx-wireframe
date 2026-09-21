@@ -368,7 +368,7 @@
     return `<article class="panel activity-card ${activity.cover ? "with-media" : "no-media"}">
       ${preview}
       <div class="activity-card-body">
-        ${hasMedia ? "" : `<div class="activity-text-label"><span>${socialIcon(activity.platform)} ${activity.platform}</span></div>`}
+        ${hasMedia ? "" : `<div class="activity-text-label"><span aria-label="${activity.platform}" title="${activity.platform}">${socialIcon(activity.platform)}</span></div>`}
         <div class="activity-story"><span class="avatar">${activity.initials}</span><h3>${activity.title}</h3></div>
         ${hasMedia ? "" : `<p class="activity-excerpt">${activity.excerpt}</p>`}
         <strong class="activity-byline">${activity.author}</strong>
