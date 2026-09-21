@@ -69,7 +69,7 @@ window.ROCX_CONTENT = {
     },
     leaderboard: {
       title: "Community rankings.",
-      description: "Compare campaign contribution and PoA scores."
+      description: "Compare AE earned across campaign and PoA rankings."
     },
     "my-page": {
       title: "My corner of the universe.",
@@ -112,12 +112,12 @@ window.ROCX_CONTENT = {
 
   leaderboard: {
     overall: [
-      { rank: 1, user: "0xaeb5...f0b6", label: "Astra", value: "18,225 pts", delta: "+2" },
-      { rank: 2, user: "0x8f9e...09f3", label: "Orbit", value: "16,390 pts", delta: "−1" },
-      { rank: 3, user: "0x00f8...abb1", label: "Nova", value: "15,073 pts", delta: "+1" },
-      { rank: 4, user: "0xf5ce...2d7d", label: "Blue", value: "12,386 pts", delta: "—" },
-      { rank: 5, user: "0x0f0e...a243", label: "Echo", value: "10,300 pts", delta: "+3" },
-      { rank: 6, user: "0x1b9b...1941", label: "Atlas", value: "9,880 pts", delta: "−2" }
+      { rank: 1, user: "0xaeb5...f0b6", label: "Astra", value: "18,225 AE", delta: "+2" },
+      { rank: 2, user: "0x8f9e...09f3", label: "Orbit", value: "16,390 AE", delta: "−1" },
+      { rank: 3, user: "0x00f8...abb1", label: "Nova", value: "15,073 AE", delta: "+1" },
+      { rank: 4, user: "0xf5ce...2d7d", label: "Blue", value: "12,386 AE", delta: "—" },
+      { rank: 5, user: "0x0f0e...a243", label: "Echo", value: "10,300 AE", delta: "+3" },
+      { rank: 6, user: "0x1b9b...1941", label: "Atlas", value: "9,880 AE", delta: "−2" }
     ],
     defi: [
       { rank: 1, user: "0xf5ce...2d7d", label: "Blue", value: "$28,420", delta: "+1" },
@@ -127,11 +127,11 @@ window.ROCX_CONTENT = {
       { rank: 5, user: "0x1b9b...1941", label: "Atlas", value: "$12,400", delta: "−1" }
     ],
     poa: [
-      { rank: 1, user: "0x8f9e...09f3", label: "Orbit", value: "312 pts", delta: "+2" },
-      { rank: 2, user: "0x00f8...abb1", label: "Nova", value: "286 pts", delta: "—" },
-      { rank: 3, user: "0xaeb5...f0b6", label: "Astra", value: "244 pts", delta: "−2" },
-      { rank: 4, user: "0x0f0e...a243", label: "Echo", value: "198 pts", delta: "+1" },
-      { rank: 5, user: "0xf5ce...2d7d", label: "Blue", value: "175 pts", delta: "—" }
+      { rank: 1, user: "0x8f9e...09f3", label: "Orbit", value: "312 AE", delta: "+2" },
+      { rank: 2, user: "0x00f8...abb1", label: "Nova", value: "286 AE", delta: "—" },
+      { rank: 3, user: "0xaeb5...f0b6", label: "Astra", value: "244 AE", delta: "−2" },
+      { rank: 4, user: "0x0f0e...a243", label: "Echo", value: "198 AE", delta: "+1" },
+      { rank: 5, user: "0xf5ce...2d7d", label: "Blue", value: "175 AE", delta: "—" }
     ]
   }
 };
